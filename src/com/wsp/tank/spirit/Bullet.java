@@ -11,10 +11,10 @@ import com.wsp.tank.sound.PlayerSound;
 public class Bullet extends Rectangle implements Spirit {
 
 	public int dir;
-	private int speed = 7;  //×Óµ¯ÒÆ¶¯ËÙ¶È
-	private int energy;  //×Óµ¯ÍşÁ¦
+	private int speed = 7;  //å­å¼¹ç§»åŠ¨é€Ÿåº¦
+	private int energy;  //å­å¼¹å¨åŠ›
 	public boolean isEnemy;	
-	private int on;	//ÊÇ¼¸ºÅÍæ¼ÒµÄ×Óµ¯£¬ÈçÎªµĞÈËÌ¹¿ËÔò´ËÖµÎŞĞ§
+	private int on;	//æ˜¯å‡ å·ç©å®¶çš„å­å¼¹ï¼Œå¦‚ä¸ºæ•Œäººå¦å…‹åˆ™æ­¤å€¼æ— æ•ˆ
 	private BattleScene battleScene;
 	
 	public Bullet(BattleScene battleScene , int x , int y , int dir , int energy) {
@@ -154,7 +154,7 @@ public class Bullet extends Rectangle implements Spirit {
 			return false;
 		}
 		
-		//×ó±ßÁ½¿é×°ÊÎÎï
+		//å·¦è¾¹ä¸¤å—è£…é¥°ç‰©
 		int _x = (x - 32) / 8;
 		int _y = (y - 16 + 8) / 8;
 		boolean isHit = false;
@@ -214,7 +214,7 @@ public class Bullet extends Rectangle implements Spirit {
 			return false;
 		}
 		
-		//ÉÏ±ßÁ½¿é×°ÊÎÎï
+		//ä¸Šè¾¹ä¸¤å—è£…é¥°ç‰©
 		int _x = (x - 32) / 8;
 		int _y = (y - 16) / 8;
 		boolean isHit = false;
@@ -274,7 +274,7 @@ public class Bullet extends Rectangle implements Spirit {
 			return false;
 		}
 		
-		//ÉÏ±ßÁ½¿é×°ÊÎÎï
+		//ä¸Šè¾¹ä¸¤å—è£…é¥°ç‰©
 		int _x = (x - 32 + 8) / 8;
 		int _y = (y - 16) / 8;
 		boolean isHit = false;
@@ -385,13 +385,13 @@ public class Bullet extends Rectangle implements Spirit {
 			if(tank.starCount < 1 && isEnemy != tank.isEnemy) { 
 				if(this.intersects(tank)) {
 					if(tank.invincibleTime < 1) {
-						if(tank.ship) { //´¬±»´òµô(ÓĞ´¬Ê±Ïàµ±ÓÚ¶àÒ»µã»¤¼×)
+						if(tank.ship) { //èˆ¹è¢«æ‰“æ‰(æœ‰èˆ¹æ—¶ç›¸å½“äºå¤šä¸€ç‚¹æŠ¤ç”²)
 							new PlayerSound(Art.hitirontank);
 							tank.ship = false;
-						} else if(tank.shield > 0) {  //µ±Ì¹¿Ë»¤¼×´óÓÚ0Ê±±»»÷ÖĞÖ»»áµô1µã»¤¼×
+						} else if(tank.shield > 0) {  //å½“å¦å…‹æŠ¤ç”²å¤§äº0æ—¶è¢«å‡»ä¸­åªä¼šæ‰1ç‚¹æŠ¤ç”²
 							new PlayerSound(Art.hitirontank);
 							tank.shield--;
-						} else {  //»¤¼×µãÎª0Ê±Ì¹¿Ë±»»÷ÖĞ½«»áËÀµô
+						} else {  //æŠ¤ç”²ç‚¹ä¸º0æ—¶å¦å…‹è¢«å‡»ä¸­å°†ä¼šæ­»æ‰
 							Bomb.tankBomb(battleScene , tank);
 							battleScene.tanks.remove(tank);
 							if(isEnemy) {
@@ -403,10 +403,10 @@ public class Bullet extends Rectangle implements Spirit {
 								battleScene.playerTanks[on].score += tank.type * 100 + 100;
 							}
 						}
-						//µôÂä±¦Îï
+						//æ‰è½å®ç‰©
 						if(tank.isEnemy) {
 							EnemyTank enemyTank = (EnemyTank)tank;
-							if(enemyTank.isFlickerTank) { //×Óµ¯»÷ÖĞÉÁË¸Ì¹¿Ë£¬Ë¢ĞÂ±¦Îï
+							if(enemyTank.isFlickerTank) { //å­å¼¹å‡»ä¸­é—ªçƒå¦å…‹ï¼Œåˆ·æ–°å®ç‰©
 								new PlayerSound(Art.redbang);
 								battleScene.treasure = new Treasure(battleScene);
 							}
@@ -436,8 +436,4 @@ public class Bullet extends Rectangle implements Spirit {
 		return false;
 	}
 	
-	public Rectangle getRectangle(int x , int y) {
-		return new Rectangle(x, y, width, height);
-	}
-
 }
