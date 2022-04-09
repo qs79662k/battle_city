@@ -44,7 +44,7 @@ public class Bomb implements Spirit {
 			if(e.isPass()) {
 				bombFrame++;
 				if(bombFrame > Art.bomb1[0].length - 1) {
-					//±¬Õ¨¶¯»­²¥·ÅÍêÊ±É¾³ı×Ô¼º
+					//çˆ†ç‚¸åŠ¨ç”»æ’­æ”¾å®Œæ—¶åˆ é™¤è‡ªå·±
 					battleScene.spirits.remove(this);
 				}
 			}
@@ -109,7 +109,7 @@ public class Bomb implements Spirit {
 	}
 	
 	/**
-	 * @param tank ±»»÷»ÙµÄÌ¹¿Ë
+	 * @param tank è¢«å‡»æ¯çš„å¦å…‹
 	 */
 	public static void tankBomb(BattleScene battleScene , Tank tank) {
 		new PlayerSound(Art.bang);
@@ -129,23 +129,18 @@ public class Bomb implements Spirit {
 	}
 	
 	/**
-	 * »ùµØ±»»÷»Ù
+	 * åŸºåœ°è¢«å‡»æ¯
 	 */
 	public static void baseBomb(BattleScene battleScene) {
 		new PlayerSound(Art.bang2);
 		Random random = new Random();
-		int minBombCount = random.nextInt(4) + 2; //Ëæ»úĞ¡±¬Õ¨¸öÊı
-		for(int i = 0 ; i < minBombCount ; i++) { //Éú³ÉËæ»úµÄĞ¡±¬Õ¨×ø±ê
+		int minBombCount = random.nextInt(4) + 2; //éšæœºå°çˆ†ç‚¸ä¸ªæ•°
+		for(int i = 0 ; i < minBombCount ; i++) { //ç”Ÿæˆéšæœºçš„å°çˆ†ç‚¸åæ ‡
 			int bx = random.nextInt(32);
 			int by = random.nextInt(32);
 			battleScene.spirits.add(new Bomb(battleScene, Bomb.MIN_BOMB_TYPE , bx + 208 , by + 384));
 		}
 		battleScene.spirits.add(new Bomb(battleScene, Bomb.MAX_BOMB_TYPE , 208, 384));
 	}
-	
-	public Rectangle getRectangle() {
-		return new Rectangle(x, y, 4, 4);
-	}
-
 
 }
