@@ -10,7 +10,7 @@ import com.wsp.tank.spirit.Tank;
 public class DodgeAction extends Action {
 	
 	public final static int SAFE_SCORE = 35;
-	private int reticent;  //µ±·¢ÏÖÎ£ÏÕÊ±£¬´ËÖµ½«»á±»ÉèÖÃ³É20¡£´ËÖµÖ»Òª´óÓÚ0£¬action·½·¨½«»áÒ»Ö±·µ»Øtrue
+	private int reticent;  //å½“å‘ç°å±é™©æ—¶ï¼Œæ­¤å€¼å°†ä¼šè¢«è®¾ç½®æˆ20ã€‚æ­¤å€¼åªè¦å¤§äº0ï¼Œactionæ–¹æ³•å°†ä¼šä¸€ç›´è¿”å›true
 	
 	public DodgeAction(BattleScene battleScene , PlayerTank playerTank) {
 		super(battleScene, playerTank);
@@ -24,6 +24,7 @@ public class DodgeAction extends Action {
 		
 		boolean isDanger = Danger.isDanger(battleScene , playerTank.isEnemy , playerTank);
 		if(isDanger) { 
+			reticent = 20;
 			findSafeDirection();
 			return true;
 		} 
@@ -37,14 +38,14 @@ public class DodgeAction extends Action {
 	}
 
 	/**
-	 * ÕÒ×î°²È«µÄ·½Ïò
+	 * æ‰¾æœ€å®‰å…¨çš„æ–¹å‘
 	 * @return
 	 */
 	private boolean findSafeDirection() {
-		//µÃ·ÖÔ½¸ßµÄ·½ÏòÔ½°²È«
+		//å¾—åˆ†è¶Šé«˜çš„æ–¹å‘è¶Šå®‰å…¨
 		Rectangle r = null;
 		int[] scores = {999 , 999 , 999 , 999};
-		//±»×Óµ¯¹¥»÷
+		//è¢«å­å¼¹æ”»å‡»
 		for(Bullet bullet : battleScene.bullets) {
 			if(playerTank.isEnemy != bullet.isEnemy) {
 				Trajectory t = Trajectory.createTrajectory(battleScene.map , bullet.dir , bullet , playerTank);
@@ -58,7 +59,7 @@ public class DodgeAction extends Action {
 			}
 		}
 		
-		//µĞÈË³¯Ïò×Ô¼º
+		//æ•Œäººæœå‘è‡ªå·±
 		for(Tank tank : battleScene.tanks) {
 			if(playerTank.isEnemy != tank.isEnemy && tank.starCount < 1) {
 				int x = tank.x + (32 - 8) / 2;
@@ -74,8 +75,7 @@ public class DodgeAction extends Action {
 			}
 		}
 		
-		reticent = 20;
-		int dir = getMostDangerDirection(scores);		//×îÎ£ÏÕµÄ·½Ïò
+		int dir = getMostDangerDirection(scores);		//æœ€å±é™©çš„æ–¹å‘
 		if(dir == Spirit.DIR_UP || dir == Spirit.DIR_DOWN) {
 			int y = playerTank.y;
 			if(playerTank.dir == Spirit.DIR_UP || playerTank.dir == Spirit.DIR_DOWN) {
