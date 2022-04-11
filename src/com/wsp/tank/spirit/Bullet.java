@@ -11,7 +11,7 @@ import com.wsp.tank.sound.PlayerSound;
 public class Bullet extends Rectangle implements Spirit {
 
 	public int dir;
-	public final static int speed = 10;  //子弹移动速度
+	public final static int speed = 8;  //子弹移动速度
 	private int energy;  //子弹威力
 	public boolean isEnemy;	
 	private int on;	//是几号玩家的子弹，如为敌人坦克则此值无效
