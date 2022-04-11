@@ -9,7 +9,7 @@ import com.wsp.tank.spirit.Spirit;
 import com.wsp.tank.spirit.Tank;
 
 /**
- * Ñ²Âß
+ * å·¡é€»
  * @author wsp
  *
  */
@@ -31,11 +31,11 @@ public class PatrolAction extends Action {
 	}
 	
 	/**
-	 * Ñ²Âß
+	 * å·¡é€»
 	 */
 	private void patrol() {
 		int dir = -1;
-		//Éú³ÉÌ¹¿ËµÄ²½ÊıÓë·½Ïò
+		//ç”Ÿæˆå¦å…‹çš„æ­¥æ•°ä¸æ–¹å‘
 		if(playerTank.starCount < 1) {
 			if(step > 0) {
 				step--;
@@ -49,7 +49,7 @@ public class PatrolAction extends Action {
 			dir = playerTank.dir;
 		}
 	
-		//µ±·½Ïò´æÔÚÎ£ÏÕÊ±Éú³ÉËæ»ú·½Ïò£¬Èç¹ûËùÓĞ·½Ïò¶¼´æÔÚÎ£ÏÕ½«»áÍ£Ö¹ÒÆ¶¯
+		//å½“æ–¹å‘å­˜åœ¨å±é™©æ—¶ç”Ÿæˆéšæœºæ–¹å‘ï¼Œå¦‚æœæ‰€æœ‰æ–¹å‘éƒ½å­˜åœ¨å±é™©å°†ä¼šåœæ­¢ç§»åŠ¨
 		if(!Danger.isDirectionDanger(battleScene, dir, playerTank.isEnemy, playerTank.getRectangle(dir))) {
 			move(dir);
 		} else {
@@ -65,7 +65,7 @@ public class PatrolAction extends Action {
 	}
 	
 	/**
-	 * Ãé×¼µĞÈË
+	 * ç„å‡†æ•Œäºº
 	 * @return
 	 */
 	private boolean aim() {
@@ -109,17 +109,17 @@ public class PatrolAction extends Action {
 		}
 
 		if(score < 52) {
-			//µ±ÓëÌ¹¿Ë·½Ïò²»Ò»ÖÁÊ±µ÷Õû·½ÏòÃé×¼µĞÈË
+			//å½“ä¸å¦å…‹æ–¹å‘ä¸ä¸€è‡³æ—¶è°ƒæ•´æ–¹å‘ç„å‡†æ•Œäºº
 			if(playerTank.dir != dir) {
 				if(!Danger.isDanger(battleScene, playerTank.isEnemy, playerTank.getRectangle(dir))) {
 					move(dir);
 				}
 			}
-			//Èç¹ûÏòÃé×¼·½ÏòÇ°½øÊ±ÓĞÎ£ÏÕÔòÍ£Ö¹ÒÆ¶¯
+			//å¦‚æœå‘ç„å‡†æ–¹å‘å‰è¿›æ—¶æœ‰å±é™©åˆ™åœæ­¢ç§»åŠ¨
 			if(!Danger.isDirectionDanger(battleScene, dir, playerTank.isEnemy, playerTank.getRectangle(dir))) {
 				Trajectory t = getShortTrajectory(dir);
 				if(t != null) {
-					if(t.length > 96) {   //>96Îª°²È«¹¥»÷¾àÀë£¬´óÓÚ°²È«¾àÀë²Å»áÏòÃé×¼ÒÆ¶¯
+					if(t.length > Bullet.speed * 6) {   //>96ä¸ºå®‰å…¨æ”»å‡»è·ç¦»ï¼Œå¤§äºå®‰å…¨è·ç¦»æ‰ä¼šå‘ç„å‡†ç§»åŠ¨
 						move(dir);
 					}
 				}
@@ -131,7 +131,7 @@ public class PatrolAction extends Action {
 	}
 	
 	/**
-	 * »ñÈ¡µ±Ç°Ãé×¼·½ÏòÉÏ×î¶ÌµÄµ¯µÀ
+	 * è·å–å½“å‰ç„å‡†æ–¹å‘ä¸Šæœ€çŸ­çš„å¼¹é“
 	 * @param dir
 	 * @return
 	 */
@@ -169,8 +169,8 @@ public class PatrolAction extends Action {
 	}
 	
 	/**
-	 * »ñÈ¡Ëæ»ú·½ÏòÊı×é
-	 * @param dir ±»ÅÅ³ıµÄ·½Ïò
+	 * è·å–éšæœºæ–¹å‘æ•°ç»„
+	 * @param dir è¢«æ’é™¤çš„æ–¹å‘
 	 * @return
 	 */
 	private int[] getRandomDirectionArray(int dir) {
@@ -181,7 +181,7 @@ public class PatrolAction extends Action {
 				arr[index++] = i;
 			}
 		}
-		//ÂÒĞò·½Ïò
+		//ä¹±åºæ–¹å‘
 		Random random = new Random();
 		for(int i = arr.length - 1 ; i > 0 ; i--) {
 			int r = random.nextInt(i + 1);
