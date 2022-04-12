@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- * Á÷¶¯µÄÐéÏß
+ * 流动的虚线
  * @author wsp
  *
  */
