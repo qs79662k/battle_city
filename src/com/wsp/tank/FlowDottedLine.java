@@ -4,16 +4,27 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- * 流动的虚线
+ * 脕梅露炉碌脛脨茅脧脽
  * @author wsp
  *
  */
 public class FlowDottedLine {
 	
-	private static int forward = 0;
-	private static Escapement e = new Escapement(80);
+	private int width;
+	private int height;
+	private int lineWidth;
+	private int lineHeight;
+	private int forward = 0;
+	private Escapement e = new Escapement(80);
 	
-	public static void drawFlowDottedLine(Graphics g , int x , int y, int width , int height , int lineWidth , int lineHeight) {
+	public FlowDottedLine(int width , int height , int lineWidth , int lineHeight) {
+		this.width = width;
+		this.height = height;
+		this.lineWidth = lineWidth;
+		this.lineHeight = lineHeight;
+	}
+	
+	public void drawFlowDottedLine(Graphics g , int x , int y) {
 		int offsetX = 0;
 		int offsetY = 0;
 		int pixels = width * 2 + height * 2;
