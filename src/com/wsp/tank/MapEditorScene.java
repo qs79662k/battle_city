@@ -5,14 +5,14 @@ import java.awt.Cursor;
 import java.awt.Graphics;
 
 /**
- * µØÍ¼±à¼©Æ÷
+ * åœ°å›¾ç¼–ç¼‰å™¨
  * @author wsp
- * 1£¬µ±´æÔÚ×Ô¶¨ÒåµØÍ¼ÎÄ¼ş£¨ÓëjarÍ¬Ä¿Â¼µÄmapÎÄ¼ş£©Ê±½«Ê¹ÓÃ´ËÎÄ¼şÖĞµÄµØÍ¼×öÎª±à¼©µØÍ¼£¬Èç²»´æÔÚÔò½«´´½¨µÚÒ»¹Ø³õÊ¼µØÍ¼×öÎª±à¼©µØÍ¼
- * 2£¬Ïà¹Ø²Ù×÷°´Å¥¹¦ÄÜ½éÉÜ
- * 	 F3£ºÇå³ıµ±Ç°¹Ø¿¨µØÍ¼ÖĞËùÓĞ¿É±à¼©×°ÊÎÎï
- *   F4£º´´½¨Ò»ÕÅĞÂµØÍ¼£¬×öÎªĞÂÔö¹Ø¿¨¡£ÀıÈç£ºµ±Ç°×î´ó¹Ø¿¨Îª35£¬Ôò´´½¨µÄµØÍ¼Îª36¹Ø
- *   F5£ºÉ¾³ıµ±Ç°µØÍ¼£¬µ±É¾³ı³É¹¦ºó£¬µ±Ç°¹ØÖ®ºóµÄ¹Ø¿¨½«ºóÒÆ¡£ÀıÈç£ºµ±Ç°±»É¾³ıµÄ¹Ø¿¨Îª24£¬Ôò24¹Ø¿¨Ö®ºóµÄ¹Ø¿¨Ôò-1
- *   F8£º±£´æµ±Ç°ËùÓĞ¿É±à¼©µØÍ¼¡£±£´æÂ·¾¶ÎªjarËùÔÚÄ¿Â¼
+ * 1ï¼Œå½“å­˜åœ¨è‡ªå®šä¹‰åœ°å›¾æ–‡ä»¶ï¼ˆä¸jaråŒç›®å½•çš„mapæ–‡ä»¶ï¼‰æ—¶å°†ä½¿ç”¨æ­¤æ–‡ä»¶ä¸­çš„åœ°å›¾åšä¸ºç¼–ç¼‰åœ°å›¾ï¼Œå¦‚ä¸å­˜åœ¨åˆ™å°†åˆ›å»ºç¬¬ä¸€å…³åˆå§‹åœ°å›¾åšä¸ºç¼–ç¼‰åœ°å›¾
+ * 2ï¼Œç›¸å…³æ“ä½œæŒ‰é’®åŠŸèƒ½ä»‹ç»
+ * 	 F3ï¼šæ¸…é™¤å½“å‰å…³å¡åœ°å›¾ä¸­æ‰€æœ‰å¯ç¼–ç¼‰è£…é¥°ç‰©
+ *   F4ï¼šåˆ›å»ºä¸€å¼ æ–°åœ°å›¾ï¼Œåšä¸ºæ–°å¢å…³å¡ã€‚ä¾‹å¦‚ï¼šå½“å‰æœ€å¤§å…³å¡ä¸º35ï¼Œåˆ™åˆ›å»ºçš„åœ°å›¾ä¸º36å…³
+ *   F5ï¼šåˆ é™¤å½“å‰åœ°å›¾ï¼Œå½“åˆ é™¤æˆåŠŸåï¼Œå½“å‰å…³ä¹‹åçš„å…³å¡å°†åç§»ã€‚ä¾‹å¦‚ï¼šå½“å‰è¢«åˆ é™¤çš„å…³å¡ä¸º24ï¼Œåˆ™24å…³å¡ä¹‹åçš„å…³å¡åˆ™-1
+ *   F8ï¼šä¿å­˜å½“å‰æ‰€æœ‰å¯ç¼–ç¼‰åœ°å›¾ã€‚ä¿å­˜è·¯å¾„ä¸ºjaræ‰€åœ¨ç›®å½•
  */
 public class MapEditorScene extends Scene {
 	
@@ -26,6 +26,8 @@ public class MapEditorScene extends Scene {
 	private int frame;
 	private int saveOkExistTime;
 	private TankComponent component;
+	private FlowDottedLine toolFlowDottedLine = new FlowDottedLine(31 , 31 , 5 , 1);
+	private FlowDottedLine workFlowDottedLine = new FlowDottedLine(30 , 30 , 5 , 1);
 	private Escapement frameEscapement = new Escapement(500);
 	private Escapement stageEscapement = new Escapement(200);
 	private Escapement saveEscapement = new Escapement(1000);
@@ -44,13 +46,13 @@ public class MapEditorScene extends Scene {
 	
 	@Override
 	public void update() {
-		//¸üĞÂ³¡¾°ÖĞ¿É¶¯ÎïÌåµÄÖ¡ÏÂ±ê
+		//æ›´æ–°åœºæ™¯ä¸­å¯åŠ¨ç‰©ä½“çš„å¸§ä¸‹æ ‡
 		if(frameEscapement.isPass()) {
 			frame = frame > 0 ? 0 : 1;
 		}
-		//Ñ¡Ôñ±à¼©µØÍ¼
+		//é€‰æ‹©ç¼–ç¼‰åœ°å›¾
 		if(stageEscapement.isPass()) {
-			//ÉÏ·­µØÍ¼
+			//ä¸Šç¿»åœ°å›¾
 			if(keys[I_KEY_UP]) {
 				if(stage < 2) {
 					stage = maps.length;
@@ -58,7 +60,7 @@ public class MapEditorScene extends Scene {
 					stage--;
 				}
 			}
-			//ÏÂ·­µØÍ¼
+			//ä¸‹ç¿»åœ°å›¾
 			if(keys[I_KEY_DOWN]) {
 				if(stage > maps.length - 1) {
 					stage = 1;
@@ -66,24 +68,24 @@ public class MapEditorScene extends Scene {
 					stage++;
 				}
 			}
-			//Çå¿Õµ±Ç°µØÍ¼Êı¾İ
+			//æ¸…ç©ºå½“å‰åœ°å›¾æ•°æ®
 			if(keys[KEY_F3]) {
 				clearMap();
 			}
-			//´´½¨×Ô¶¨ÒåµØÍ¼
+			//åˆ›å»ºè‡ªå®šä¹‰åœ°å›¾
 			if(keys[KEY_F4]) {
 				createMap();
 			}
-			//É¾³ıµ±Ç°µØÍ¼
+			//åˆ é™¤å½“å‰åœ°å›¾
 			if(keys[KEY_F5]) {
 				deleteMap();
 			}
-			//±£´æ×Ô¶¨ÒåµØÍ¼
+			//ä¿å­˜è‡ªå®šä¹‰åœ°å›¾
 			if(keys[KEY_F8]) {
 				saveMaps();
 			}
 		}
-		//µØÍ¼±£´æ³É¹¦ÌáÊ¾
+		//åœ°å›¾ä¿å­˜æˆåŠŸæç¤º
 		if(saveOkExistTime > 0 && saveEscapement.isPass()) {
 			saveOkExistTime--;
 		}
@@ -97,16 +99,16 @@ public class MapEditorScene extends Scene {
 	
 	@Override
 	public void render(Graphics g) {
-		//»­±³¾°
+		//ç”»èƒŒæ™¯
 		g.setColor(new Color(132 , 132 , 132));
 		g.fillRect(0, 0, TankComponent.WIDTH, TankComponent.HEIGHT);
 		g.setColor(Color.BLACK);
 		g.fillRect(TankComponent.GAME_BOX_MARGIN_1, TankComponent.GAME_BOX_MARGIN_1, TankComponent.GAME_BOX_SIZE, TankComponent.GAME_BOX_SIZE);
-		//»­µØÍ¼×°ÊÎÎï
+		//ç”»åœ°å›¾è£…é¥°ç‰©
 		if(maps[stage - 1] != null) {
 			for(int y = 0 ; y < maps[stage - 1].length ; y++) {
 				for(int x = 0 ; x < maps[stage - 1][y].length ; x++) {
-					int decorate = 0xff & maps[stage - 1][y][x];	//& 0xffÊÇÎªÁËÏû³ıbyte×ªÎªintÊ±µÄ¸ºÊı
+					int decorate = 0xff & maps[stage - 1][y][x];	//& 0xffæ˜¯ä¸ºäº†æ¶ˆé™¤byteè½¬ä¸ºintæ—¶çš„è´Ÿæ•°
 					if(frame > 0) {
 						decorate = Map.getCartoonDecorate(decorate);
 					}
@@ -124,7 +126,7 @@ public class MapEditorScene extends Scene {
 			for(int x = 0 ; x < decorates[y].length ; x++) {
 				for(int _y = 0 ; _y < decorates[y][x].length ; _y++) {
 					for(int _x = 0 ; _x < decorates[y][x][_y].length ; _x++) {
-						int decorate = 0xff & decorates[y][x][_y][_x];	//& 0xffÊÇÎªÁËÏû³ıbyte×ªÎªintÊ±µÄ¸ºÊı
+						int decorate = 0xff & decorates[y][x][_y][_x];	//& 0xffæ˜¯ä¸ºäº†æ¶ˆé™¤byteè½¬ä¸ºintæ—¶çš„è´Ÿæ•°
 						if(frame > 0) {
 							decorate = Map.getCartoonDecorate(decorate);
 						}
@@ -139,20 +141,20 @@ public class MapEditorScene extends Scene {
 			}
 		}
 		
-		//Êó±ê½øÈëÓëÑ¡Ôñ×°ÊÎÎï
+		//é¼ æ ‡è¿›å…¥ä¸é€‰æ‹©è£…é¥°ç‰©
 		if(pointX > 450 && pointX < 520 && pointY > 80 && pointY < 327) {		
 			int x = (pointX - 451) / 34 + ((pointX - 451) / 34 > 0 ? ((pointX - 451) % 34 == 0 ? -1 : 0) : 0);
 			int y = (pointY - 81) / 35 + ((pointY - 81) % 35 == 0 ? 0 : 1);		
 			int decoratePointIndex = x + (y == 0 ? 0 : y - 1) * 2;			
 			g.setColor(new Color(254 , 254 , 65 , 100));
 			g.fillRect(DECORATE_POINT[decoratePointIndex] / 500 , DECORATE_POINT[decoratePointIndex] % 500, 32, 32);
-			//Ñ¡Ôñ×°ÊÎÎï
+			//é€‰æ‹©è£…é¥°ç‰©
 			if(isMousePressed) {
 				this.decoratePointIndex = decoratePointIndex;
 			}
 		}
 		
-		//Êó±ê½øÈëÓÎÏ·¿òÓëÉú³É×°ÊÎÎï
+		//é¼ æ ‡è¿›å…¥æ¸¸æˆæ¡†ä¸ç”Ÿæˆè£…é¥°ç‰©
 		if(pointX > 18 && pointX < 447 && pointY > 46 && pointY < 477) {
 			int x = (pointX - 19) / 33;
 			int y = (pointY - 48) / 33;
@@ -178,7 +180,7 @@ public class MapEditorScene extends Scene {
 						}	
 					}
 				}
-				//µ¥»÷Êó±ê×ó¼üÊ±Ìæ»»µØÍ¼×°ÊÎÎï
+				//å•å‡»é¼ æ ‡å·¦é”®æ—¶æ›¿æ¢åœ°å›¾è£…é¥°ç‰©
 				if(isMousePressed) {
 					for(int _y = 0 ; _y < 4 ; _y++) {
 						for(int _x = 0 ; _x < 4 ; _x++) {
@@ -186,7 +188,7 @@ public class MapEditorScene extends Scene {
 						}
 					}					
 				}
-				FlowDottedLine.drawFlowDottedLine(g, x * 32 + 17 , y * 32 + 17 , 30 , 30 , 6 , 1);
+				workFlowDottedLine.drawFlowDottedLine(g, x * 32 + 17 , y * 32 + 17);
 			}
 		} else {
 			component.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -201,9 +203,9 @@ public class MapEditorScene extends Scene {
 		
 		g.setColor(new Color(254 , 254 , 65 , 100));
 		g.fillRect(DECORATE_POINT[decoratePointIndex] / 500 , DECORATE_POINT[decoratePointIndex] % 500, 32, 32);
-		FlowDottedLine.drawFlowDottedLine(g, DECORATE_POINT[decoratePointIndex] / 500 , DECORATE_POINT[decoratePointIndex] % 500 , 31 , 31 , 6 , 1);
+		toolFlowDottedLine.drawFlowDottedLine(g, DECORATE_POINT[decoratePointIndex] / 500 , DECORATE_POINT[decoratePointIndex] % 500);
 		
-		//»­¾­Î³Ïß
+		//ç”»ç»çº¬çº¿
 		g.setColor(Color.WHITE);
 		for(int y = 0 ; y < TankComponent.GAME_BOX_SIZE / 32 + 1 ; y++) {
 			for(int x = 0 ; x < TankComponent.GAME_BOX_SIZE / 32 ; x++) {
@@ -212,7 +214,7 @@ public class MapEditorScene extends Scene {
 			}
 		}
 		
-		//±£´æµØÍ¼³É¹¦ÌáÊ¾ĞÅÏ¢
+		//ä¿å­˜åœ°å›¾æˆåŠŸæç¤ºä¿¡æ¯
 		if(saveOkExistTime > 0) {
 			chars = SAVE_OK.toCharArray();
 			int x = (TankComponent.GAME_BOX_SIZE - chars.length * 16) / 2 + TankComponent.GAME_BOX_MARGIN_1;
@@ -225,7 +227,7 @@ public class MapEditorScene extends Scene {
 	}
 	
 	/**
-	 * Çå³ı×Ô¶¨ÒåµØÍ¼ÖĞ¶àÓàµÄ×°ÊÎÎï(»Ö¸´ÎªµØÍ¼³õÊ¼×°Ì¬)
+	 * æ¸…é™¤è‡ªå®šä¹‰åœ°å›¾ä¸­å¤šä½™çš„è£…é¥°ç‰©(æ¢å¤ä¸ºåœ°å›¾åˆå§‹è£…æ€)
 	 */
 	private void clearMap() {
 		byte[][] templateMap = Map.getTemplateMap();
@@ -237,7 +239,7 @@ public class MapEditorScene extends Scene {
 	}
 	
 	/**
-	 * É¾³ıµ±Ç°stage×Ô¶¨ÒåµØÍ¼
+	 * åˆ é™¤å½“å‰stageè‡ªå®šä¹‰åœ°å›¾
 	 */
 	private void deleteMap() {
 		byte[][][] maps = null;
@@ -261,7 +263,7 @@ public class MapEditorScene extends Scene {
 	}
 	
 	/**
-	 * ´´½¨×Ô¶¨ÒåµØÍ¼
+	 * åˆ›å»ºè‡ªå®šä¹‰åœ°å›¾
 	 */
 	private void createMap() {		
 		byte[][][] maps = new byte[this.maps.length + 1][][];
@@ -272,7 +274,7 @@ public class MapEditorScene extends Scene {
 	}
 	
 	/**
-	 * ±£´æ×ÔÒå¶¨µØÍ¼
+	 * ä¿å­˜è‡ªä¹‰å®šåœ°å›¾
 	 */
 	private void saveMaps() {
 		Map.saveMaps(maps);
