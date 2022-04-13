@@ -380,7 +380,7 @@ public class Bullet extends Rectangle implements Spirit {
 		return false;
 	}
 	
-	private boolean hitTank() {
+	private void hitTank() {
 		for(int i = 0 ; i < battleScene.tanks.size(); i++) {
 			Tank tank = battleScene.tanks.get(i);
 			if(tank.starCount < 1 && isEnemy != tank.isEnemy) { 
@@ -415,14 +415,12 @@ public class Bullet extends Rectangle implements Spirit {
 						Bomb.minBomb(battleScene , dir , x , y);
 					}
 					battleScene.bullets.remove(this);
-					return true;
 				}
 			}
 		}
-		return false;
 	}
 	
-	private boolean hitBullet() {
+	private void hitBullet() {
 		for(int i = 0 ; i < battleScene.bullets.size(); i++) {
 			Bullet bullet = battleScene.bullets.get(i);
 			if(isEnemy != bullet.isEnemy) {
@@ -430,11 +428,9 @@ public class Bullet extends Rectangle implements Spirit {
 					new PlayerSound(Art.hitbullet);
 					battleScene.bullets.remove(this);
 					battleScene.bullets.remove(bullet);
-					return true;
 				}
 			}
 		}
-		return false;
 	}
 	
 }
