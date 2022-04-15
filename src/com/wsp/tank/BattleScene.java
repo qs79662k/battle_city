@@ -17,36 +17,36 @@ import com.wsp.tank.spirit.Treasure;
 
 public class BattleScene extends Scene {
 	
-	private final static int[] ENEMY_BORN_POINTS = {224, 32 , 416};  //µĞÈË³öÉúµã
-	public final static int[] PLAYER_BORN_POINTS = {80400, 144400};  //500£¬ÎÒ·½³öÉúµã
+	private final static int[] ENEMY_BORN_POINTS = {224, 32 , 416};  //æ•Œäººå‡ºç”Ÿç‚¹
+	public final static int[] PLAYER_BORN_POINTS = {80400, 144400};  //500ï¼Œæˆ‘æ–¹å‡ºç”Ÿç‚¹
 	private int enemyBornPointIndex;
-	private boolean isPlayers;  //ÊÇ·ñÎªË«ÈËÄ£Ê½
-	public int stage;	//¹Ø¿¨
-	private boolean isCurtain = true;  //ÎªtrueÏÔÊ¾Ä»²¼½çÃæ
-	private int curtainHeight;	//ÉÏÏÂÄ»²¼µÄ¸ß
+	private boolean isPlayers;  //æ˜¯å¦ä¸ºåŒäººæ¨¡å¼
+	public int stage;	//å…³å¡
+	private boolean isCurtain = true;  //ä¸ºtrueæ˜¾ç¤ºå¹•å¸ƒç•Œé¢
+	private int curtainHeight;	//ä¸Šä¸‹å¹•å¸ƒçš„é«˜
 	public byte[][] map;
-	private int decorateFrame;  //¿É¶¯×°ÊÎÎïÖ¡
-	public int existEnemyCount = 20;		//Î´Ë¢ĞÂ³öµÄµĞÈËÌ¹¿ËÊıÁ¿
-	public int activeEnemyCount;	//ÔÚ³¡¾°ÖĞ»î¶¯µÄµĞÈËÌ¹¿ËÊıÁ¿
-	public int maxActiveEnemyCount; //ÔÚ³¡¾°ÖĞ×î´ó»î¶¯µÄµĞÈËÌ¹¿ËÊıÁ¿£¬Ã¿10¹ØÔö¼ÓÒ»Á¾
-	private int flickerEnemyCount;		//ÉÁË¸µĞÈËÌ¹¿ËÊ£ÓàË¢ĞÂÊıÁ¿£¬Ã¿¸ö¹Ø¿¨Ë¢ĞÂ1-2Á¾ÉÁË¸µĞÈËÌ¹¿Ë
-	public boolean isBaseDestroy;		//ÎªtrueÊ±»ùµØ±»´İ»Ù
+	private int decorateFrame;  //å¯åŠ¨è£…é¥°ç‰©å¸§
+	public int existEnemyCount = 20;		//æœªåˆ·æ–°å‡ºçš„æ•Œäººå¦å…‹æ•°é‡
+	public int activeEnemyCount;	//åœ¨åœºæ™¯ä¸­æ´»åŠ¨çš„æ•Œäººå¦å…‹æ•°é‡
+	public int maxActiveEnemyCount; //åœ¨åœºæ™¯ä¸­æœ€å¤§æ´»åŠ¨çš„æ•Œäººå¦å…‹æ•°é‡ï¼Œæ¯10å…³å¢åŠ ä¸€è¾†
+	private int flickerEnemyCount;		//é—ªçƒæ•Œäººå¦å…‹å‰©ä½™åˆ·æ–°æ•°é‡ï¼Œæ¯ä¸ªå…³å¡åˆ·æ–°1-2è¾†é—ªçƒæ•Œäººå¦å…‹
+	public boolean isBaseDestroy;		//ä¸ºtrueæ—¶åŸºåœ°è¢«æ‘§æ¯
 	public List<Tank> tanks = new ArrayList<Tank>(); 
 	public List<Bullet> bullets = new ArrayList<Bullet>();
-	public List<Spirit> spirits = new ArrayList<Spirit>();		//±¬Õ¨¡¢µÃ·Ö
-	public Treasure treasure;	//±¦Îï
+	public List<Spirit> spirits = new ArrayList<Spirit>();		//çˆ†ç‚¸ã€å¾—åˆ†
+	public Treasure treasure;	//å®ç‰©
 	private Random random = new Random();
-	private PlayerSound beginSound;	//¿ªÊ¼ÒôÀÖ
-	private PlayerSound playerMoveSound; //Íæ¼ÒÒÆ¶¯ÉùĞ§
-	private boolean notPlayerMoveSound = true;  //µ±ÎªfalseÎ´¿ªÊ¼Íæ¼ÒÒÆ¶¯ÉùĞ§
-	private PlayerSound enemyMoveSound;	//µĞÈËÒÆ¶¯ÉùĞ§
+	private PlayerSound beginSound;	//å¼€å§‹éŸ³ä¹
+	private PlayerSound playerMoveSound; //ç©å®¶ç§»åŠ¨å£°æ•ˆ
+	private boolean notPlayerMoveSound = true;  //å½“ä¸ºfalseæœªå¼€å§‹ç©å®¶ç§»åŠ¨å£°æ•ˆ
+	private PlayerSound enemyMoveSound;	//æ•Œäººç§»åŠ¨å£°æ•ˆ
 	public PlayerTank[] playerTanks = new PlayerTank[2];
-	public int steelWallTimer;  //»ùµØ¸ÖÇ½¶¨Ê±Æ÷£¬µ±Îª0¸ÖÇ½½«»á±ä³É×©Ç½
-	public int wallType = Map.BRICK_WALL_TYPE; //»ùµØÇ½ÀàĞÍ
+	public int steelWallTimer;  //åŸºåœ°é’¢å¢™å®šæ—¶å™¨ï¼Œå½“ä¸º0é’¢å¢™å°†ä¼šå˜æˆç –å¢™
+	public int wallType = Map.BRICK_WALL_TYPE; //åŸºåœ°å¢™ç±»å‹
 	private boolean wallChange;
-	private int overCountdown = 10;		//µ±Ç°¹Ø¿¨½áÊøµ¹¼ÆÊ±£¬Îª0Ê±½øÈëÉ±µĞÍ³¼Æ³¡¾°
-	private int startCountdown = 5;	//¿ªÊ¼ÓÎÏ·µ¹¼ÆÊ±
-	private int demoCountdown = 999;
+	private int overCountdown = 10;		//å½“å‰å…³å¡ç»“æŸå€’è®¡æ—¶ï¼Œä¸º0æ—¶è¿›å…¥æ€æ•Œç»Ÿè®¡åœºæ™¯
+	private int startCountdown = 5;	//å¼€å§‹æ¸¸æˆå€’è®¡æ—¶
+	private int demoCountdown = 999;  //æœ€å¤§æ¼”ç¤ºæ—¶é—´
 	private Escapement selectEscapement = new Escapement(300);
 	private Escapement frameEscapement = new Escapement(500);
 	private Escapement enemyEscapement = new Escapement(4000);
@@ -59,8 +59,8 @@ public class BattleScene extends Scene {
 	private boolean isPlayer1Over;
 	private boolean isPlayer2Over;
 	private int gameOverY = 400;
-	private int player1OverX = 32;  //x×ø±ê32  144
-	private int player2OverX = 384; //x×ø±ê384  272
+	private int player1OverX = 32;  //xåæ ‡32  144
+	private int player2OverX = 384; //xåæ ‡384  272
 	
 	public boolean isDemo;
 	private Robot[] robots = new Robot[2];
@@ -89,9 +89,9 @@ public class BattleScene extends Scene {
 	public void update() {
 		if(curtainHeight == TankComponent.HEIGHT / 2) {
 			/**
-			 * Ñ¡Ôñ¹Ø¿¨
-			 * down:ÏÂ·­
-			 * up:ÉÏ·­
+			 * é€‰æ‹©å…³å¡
+			 * down:ä¸‹ç¿»
+			 * up:ä¸Šç¿»
 			 */
 			if(!isDemo) {
 				if(selectEscapement.isPass()) {
@@ -126,17 +126,17 @@ public class BattleScene extends Scene {
 			}
 		}
 		
-		//´ò¿ªÄ»²¼
+		//æ‰“å¼€å¹•å¸ƒ
 		if(isCurtain && curtainHeight < TankComponent.HEIGHT / 2) {
 			curtainHeight += 8;
 		}
 		
 		if(!isCurtain) {
-			//¹Ø±ÕÄ»²¼
+			//å…³é—­å¹•å¸ƒ
 			if(curtainHeight > 0) {
 				curtainHeight -= 8;
 			} else {
-				//Õ½¶·³¡¾°×°ÊÎÎï¶¯»­Ö¡
+				//æˆ˜æ–—åœºæ™¯è£…é¥°ç‰©åŠ¨ç”»å¸§
 				if(frameEscapement.isPass()) {
 					decorateFrame = decorateFrame > 0 ? 0 : 1;		
 				}
@@ -146,23 +146,23 @@ public class BattleScene extends Scene {
 					tank.update();
 				}
 				
-				for(int i = 0 ; i < bullets.size(); i++) { //×Óµ¯
+				for(int i = 0 ; i < bullets.size(); i++) { //å­å¼¹
 					Bullet bullet = bullets.get(i);
 					bullet.update();
 				}
 				
-				for(int i = 0 ; i < spirits.size() ; i++) { //±¬Õ¨¡¢»÷É±Ì¹¿ËµÃ·Ö
+				for(int i = 0 ; i < spirits.size() ; i++) { //çˆ†ç‚¸ã€å‡»æ€å¦å…‹å¾—åˆ†
 					Spirit spirit = spirits.get(i);
 					spirit.update();
 				}
 				
-				if(treasure != null) { //±¦Îï
+				if(treasure != null) { //å®ç‰©
 					treasure.update();
 				}
 				
 				createTanks();
 				
-				//ÓÎÏ·½áÊø(»ùµØ±»´İ»Ù»òÍæ¼ÒÉúÃüÎª0)
+				//æ¸¸æˆç»“æŸ(åŸºåœ°è¢«æ‘§æ¯æˆ–ç©å®¶ç”Ÿå‘½ä¸º0)
 				int iLife = playerTanks[0] == null ? 0 : playerTanks[0].life;
 				int iiLife = playerTanks[1] == null ? 0 : playerTanks[1].life;
 				boolean iDie = playerTanks[0] == null ? true : playerTanks[0].die;
@@ -178,39 +178,39 @@ public class BattleScene extends Scene {
 						}
 					}
 					
-					//µ¹¼ÆÊ±½øÈëÕ½¹ûÍ³¼Æ³¡¾°
+					//å€’è®¡æ—¶è¿›å…¥æˆ˜æœç»Ÿè®¡åœºæ™¯
 					if(countdwonEscapement.isPass()) {
 						if(overCountdown > 1) {
 							overCountdown--;
 						} else {
-							stop(); //¹Ø±ÕËùÓĞÉùĞ§
+							stop(); //å…³é—­æ‰€æœ‰å£°æ•ˆ
 							if(isDemo) {
 								component.toHeader();
 							} else {
-								component.toResultsBattle(stage , isPlayers , true, playerTanks);  //½øÈëÕ½¹ûÍ³¼Æ³¡¾°
+								component.toResultsBattle(stage , isPlayers , true, playerTanks);  //è¿›å…¥æˆ˜æœç»Ÿè®¡åœºæ™¯
 							}
 						}
 					}
 				}
 				
-				//ÏûÃğËùÓĞµĞÈËºóµ¹¼ÆÊ±½øÈëÕ½¹ûÍ³¼Æ³¡¾°
+				//æ¶ˆç­æ‰€æœ‰æ•Œäººåå€’è®¡æ—¶è¿›å…¥æˆ˜æœç»Ÿè®¡åœºæ™¯
 				if(activeEnemyCount < 1 && existEnemyCount < 1) {
-					//µ¹¼ÆÊ±½øÈëÕ½¹ûÍ³¼Æ³¡¾°
+					//å€’è®¡æ—¶è¿›å…¥æˆ˜æœç»Ÿè®¡åœºæ™¯
 					if(countdwonEscapement.isPass()) {
 						if(overCountdown > 1) {
 							overCountdown--;
 						} else {
-							stop(); //¹Ø±ÕËùÓĞÉùĞ§
+							stop(); //å…³é—­æ‰€æœ‰å£°æ•ˆ
 							if(isDemo) {
 								component.toHeader();
 							} else {
-								component.toResultsBattle(stage , isPlayers , false, playerTanks);  //½øÈëÕ½¹ûÍ³¼Æ³¡¾°
+								component.toResultsBattle(stage , isPlayers , false, playerTanks);  //è¿›å…¥æˆ˜æœç»Ÿè®¡åœºæ™¯
 							}
 						}
 					}
 				}
 				
-				//Íæ¼Ò½áÊøÓÎÏ·
+				//ç©å®¶ç»“æŸæ¸¸æˆ
 				if(!isGameOver) {
 					if(playerTanks[0] != null) {
 						if(!isPlayer1Over && iLife == 0 && iDie) {
@@ -241,7 +241,7 @@ public class BattleScene extends Scene {
 					}
 				}
 			
-				//Íæ¼ÒÒÆ¶¯ÉùĞ§
+				//ç©å®¶ç§»åŠ¨å£°æ•ˆ
 				boolean iMove = playerTanks[0] == null ? false : playerTanks[0].isMove;
 				boolean iiMove = playerTanks[1] == null ? false : playerTanks[1].isMove;
 				if((iMove || iiMove) && (!iDie || !iiDie) && !isBaseDestroy) {			
@@ -257,7 +257,7 @@ public class BattleScene extends Scene {
 					}		
 				}
 				
-				//¸ÖÇ½
+				//é’¢å¢™
 				if(steelWallTimer > 0) {
 					if(steelWallTimer < 9) {
 						if(wallChangeEscapement.isPass()) {
@@ -304,7 +304,7 @@ public class BattleScene extends Scene {
 						if(demoCountdown > 1) {
 							demoCountdown--;
 						} else {
-							stop(); //¹Ø±ÕËùÓĞÉùĞ§
+							stop(); //å…³é—­æ‰€æœ‰å£°æ•ˆ
 							component.toHeader();
 						}
 					}
@@ -312,14 +312,14 @@ public class BattleScene extends Scene {
 			}			
 		}
 		
-		//Í£Ö¹µĞ·½Ì¹¿ËÒÆ¶¯ÉùĞ§
+		//åœæ­¢æ•Œæ–¹å¦å…‹ç§»åŠ¨å£°æ•ˆ
 		if(existEnemyCount < 1 && activeEnemyCount < 1) {
 			if(enemyMoveSound != null) {
 				enemyMoveSound.stop();
 			}
 		}
 		
-		//Í£Ö¹ËùÓĞÉùĞ§
+		//åœæ­¢æ‰€æœ‰å£°æ•ˆ
 		if(keys[KEY_ESC] || keys[KEY_F1]) {
 			stop();
 		}
@@ -393,18 +393,18 @@ public class BattleScene extends Scene {
 				g.fillRect(0, 0, 512, curtainHeight);
 				g.fillRect(0, 448 - curtainHeight, 512, curtainHeight);
 			} else {
-				//»­³ıÊ÷Ö®ÍâµÄ×°ÊÎÎï
+				//ç”»é™¤æ ‘ä¹‹å¤–çš„è£…é¥°ç‰©
 				for(int y = 0 ; y < map.length ; y++) {
 					for(int x = 0 ; x < map.length ; x++) {
-						int decorate = 0xff & map[y][x];	//& 0xffÊÇÎªÁËÏû³ıbyte×ªÎªintÊ±µÄ¸ºÊı
+						int decorate = 0xff & map[y][x];	//& 0xffæ˜¯ä¸ºäº†æ¶ˆé™¤byteè½¬ä¸ºintæ—¶çš„è´Ÿæ•°
 						if(decorateFrame > 0) {
 							decorate = Map.getCartoonDecorate(decorate);
 						}
-						//Èç¹û»ùµØ±»´İ»Ù£¬»­±»´İ»ÙµÄ»ùµØ
+						//å¦‚æœåŸºåœ°è¢«æ‘§æ¯ï¼Œç”»è¢«æ‘§æ¯çš„åŸºåœ°
 						if(isBaseDestroy) {
 							decorate = Map.getBaseDestroy(decorate);
 						}
-						//·ÇµÀÂ·£¬·ÇÊ÷
+						//éé“è·¯ï¼Œéæ ‘
 						if(decorate != 0 && !isTree(decorate)) {					
 							g.drawImage(Art.tileb[decorate % 4][decorate / 4], x * 8 + 32, y * 8 + 16 , null);
 						}
@@ -419,31 +419,31 @@ public class BattleScene extends Scene {
 					bullet.render(g);
 				}
 				
-				//»­Ê÷£¬ÒòÎªÊ÷»áÕÚµ²×¡Ì¹¿Ë£¬¶øÈç¹ûÓĞ´¬Ì¹¿ËÓÖÊÇÔÚºÓÁ÷Ö®ÉÏ£¬ËùÒÔÊ÷Ğèµ¥¶À»­£¬²¢ÇÒÔÚÌ¹¿ËÖ®ºó»­
+				//ç”»æ ‘ï¼Œå› ä¸ºæ ‘ä¼šé®æŒ¡ä½å¦å…‹ï¼Œè€Œå¦‚æœæœ‰èˆ¹å¦å…‹åˆæ˜¯åœ¨æ²³æµä¹‹ä¸Šï¼Œæ‰€ä»¥æ ‘éœ€å•ç‹¬ç”»ï¼Œå¹¶ä¸”åœ¨å¦å…‹ä¹‹åç”»
 				for(int y = 0 ; y < map.length ; y++) {
 					for(int x = 0 ; x < map[y].length ; x++) {
-						int decorate = 0xff & map[y][x];	//& 0xffÊÇÎªÁËÏû³ıbyte×ªÎªintÊ±³öÏÖµÄ¸ºÊı
+						int decorate = 0xff & map[y][x];	//& 0xffæ˜¯ä¸ºäº†æ¶ˆé™¤byteè½¬ä¸ºintæ—¶å‡ºç°çš„è´Ÿæ•°
 						if(decorateFrame > 0) {
 							decorate = Map.getCartoonDecorate(decorate);
 						}
-						//·ÇµÀÂ·£¬ÊÇÊ÷
+						//éé“è·¯ï¼Œæ˜¯æ ‘
 						if(decorate != 0 && isTree(decorate)) {					
 							g.drawImage(Art.tileb[decorate % 4][decorate / 4], x * 8 + 32, y * 8 + 16 , null);
 						}
 					}
 				}
 				
-				//»­±¬Õ¨ÓëµÃ·Ö
+				//ç”»çˆ†ç‚¸ä¸å¾—åˆ†
 				for(Spirit spirit : spirits) {
 					spirit.render(g);
 				}
 				
-				//»­±¦Îï
+				//ç”»å®ç‰©
 				if(treasure != null) {
 					treasure.render(g);;
 				}
 				
-				//»­Íæ¼Ò½áÊøÓÎÏ·
+				//ç”»ç©å®¶ç»“æŸæ¸¸æˆ
 				if(isPlayer1Over) {
 					g.drawImage(Art.gameOver , player1OverX , 400 , null);
 				}
@@ -452,7 +452,7 @@ public class BattleScene extends Scene {
 					g.drawImage(Art.gameOver , player2OverX , 400 , null);
 				}
 				
-				//»­ÓÎÏ·½áÊøÌûÍ¼
+				//ç”»æ¸¸æˆç»“æŸå¸–å›¾
 				if(isGameOver) {
 					g.drawImage(Art.gameOver , (TankComponent.GAME_BOX_SIZE - 64) / 2 + 32, gameOverY, null);
 				}
@@ -461,11 +461,11 @@ public class BattleScene extends Scene {
 	}
 	
 	private void createTanks() {
-		//Éú³ÉµĞ·½Ì¹¿Ë
+		//ç”Ÿæˆæ•Œæ–¹å¦å…‹
 		if(existEnemyCount > 0 && activeEnemyCount < maxActiveEnemyCount) {
 			if(enemyEscapement.isPass()) {
 				int count = stage / Map.getSize() + 1;
-				count = count > 3 ? 3 : count;  //×î¶àÈı¸ö³öÉúµãÍ¬Ê±Éú³ÉµĞ·½Ì¹¿Ë
+				count = count > 3 ? 3 : count;  //æœ€å¤šä¸‰ä¸ªå‡ºç”Ÿç‚¹åŒæ—¶ç”Ÿæˆæ•Œæ–¹å¦å…‹
 				for(int i = 0 ; i < count ; i++) {
 					if(existEnemyCount > 0 && activeEnemyCount < maxActiveEnemyCount) {
 						int type = random.nextInt(4);
@@ -491,12 +491,12 @@ public class BattleScene extends Scene {
 			}
 		}
 		
-		//Éú³ÉÒÑ·½Ì¹¿Ë
+		//ç”Ÿæˆå·²æ–¹å¦å…‹
 		for(int i = 0 ; i < playerTanks.length ; i++) {
 			if(i > 0 && !isPlayers) {
 				break;
 			}
-			//Éú³ÉÒÑ·½Ì¹¿Ë
+			//ç”Ÿæˆå·²æ–¹å¦å…‹
 			if(playerTanks[i] == null) {
 				playerTanks[i] = new PlayerTank(this, PlayerTank.PLAYER_TANK_TYPE_1, PLAYER_BORN_POINTS[i] / 500 , PLAYER_BORN_POINTS[i] % 500 , Spirit.DIR_UP , 0, i);
 				tanks.add(playerTanks[i]);		
@@ -546,7 +546,7 @@ public class BattleScene extends Scene {
 	}
 	
 	/**
-	 * ¹Ø±ÕËùÓĞÉùĞ§²¥·Å
+	 * å…³é—­æ‰€æœ‰å£°æ•ˆæ’­æ”¾
 	 */
 	private void stop() {
 		if(beginSound != null) {
