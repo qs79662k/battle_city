@@ -8,7 +8,6 @@ import com.wsp.tank.spirit.Spirit;
 public abstract class Action {
 	
 	protected BattleScene battleScene;
-	
 	protected PlayerTank playerTank;
 	
 	
