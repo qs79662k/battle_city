@@ -17,7 +17,7 @@ public class Score implements Spirit {
 	private int y;
 	private int type;
 	private BattleScene battleScene;
-	private int showCount = 2;
+	private int showCount = 2;	//停留显示2S
 	private Escapement e = new Escapement(1000);
 	
 	public Score(BattleScene battleScene , int type , int x , int y) {
